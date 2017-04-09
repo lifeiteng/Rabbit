@@ -10,8 +10,8 @@ from optparse import OptionParser
 from matplotlib import pyplot as plt
 
 
-def griffin_lim(stftm_matrix, min_iter=20, max_iter=50, delta=20):
-    y = np.random.random(data.shape)
+def griffin_lim(stftm_matrix, shape, min_iter=20, max_iter=50, delta=20):
+    y = np.random.random(shape)
     y_iter = []
 
     for i in range(max_iter):
@@ -35,13 +35,14 @@ if __name__ == '__main__':
         cmd_parser.print_help()
         exit(-1)
 
+    np.random.seed(0)
     # assume 1 channel wav file
     sr, data = scipy.io.wavfile.read(argv[0])
 
     stftm_matrix = np.abs(librosa.core.stft(data))
     stftm_matrix_modified = stftm_matrix + np.random.random(stftm_matrix.shape)
 
-    y_iters = griffin_lim(stftm_matrix_modified)
+    y_iters = griffin_lim(stftm_matrix_modified, data.shape)
     n_figure = 1 + len(y_iters)
 
     plt.figure(figsize=(8, 14))
