@@ -1,2 +1,4 @@
 librosa
 scipy
+numpy
+matplotlib
