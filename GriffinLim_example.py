@@ -53,14 +53,17 @@ if __name__ == '__main__':
 
   for i in range(0, len(y_iters)):
     y, n_iters = y_iters[i]
-    print('NumIters {}'.format(n_iters))
+    store_file = argv[0].replace('.wav', '_griffinlim_iters{iters}.wav'.format(iters=n_iters))
+    print('NumIters {}, Audio: {}'.format(n_iters, store_file))
     plt.subplot(n_figure, 1, i + 2)
     display.waveplot(y.astype(np.int16), sr=sr)
     plt.title('reconstructed wave from STFT-M (Iter {})'.format(n_iters))
-    store_file = argv[0].replace('.wav', '_stftm_reconstruct_iters{iters}.wav'.format(iters=n_iters))
+
     shutil.rmtree(store_file, ignore_errors=True)
     scipy.io.wavfile.write(store_file, sr, y.astype(np.int16))
 
-  plt.savefig(argv[0].replace('.wav', '.png'), dpi=100)
+  store_file = argv[0].replace('.wav', '_griffinlim.png')
+  print("Waveform image: {}".format(store_file))
+  plt.savefig(store_file, dpi=100)
 
   print('DONE')
